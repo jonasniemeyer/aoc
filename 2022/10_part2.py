@@ -3,7 +3,7 @@ def draw_crt(input_str: str) -> str:
     cycle = 0
     sprite = 0
 
-    for row in input_str.splitlines()[:]:
+    for row in input_str.splitlines():
         if row == "noop":
             instructions_left = 1
             order = 0
@@ -31,5 +31,4 @@ def draw_crt(input_str: str) -> str:
 if __name__ == "__main__":
     with open("input10.txt", "r") as file:
         puzzle_input = file.read()
-    
     print(draw_crt(puzzle_input))

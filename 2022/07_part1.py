@@ -52,7 +52,7 @@ def compute_total_size(dir: Directory, threshold: int) -> None:
     
     for child in dir.children.values():
         compute_total_size(child, threshold)
-    
+
     return None
 
 if __name__ == "__main__":
@@ -62,4 +62,5 @@ if __name__ == "__main__":
     root_dir = build_directory_tree(puzzle_input)
     total_dir_size = 0
     compute_total_size(root_dir, threshold=100000)
+    
     print(total_dir_size)

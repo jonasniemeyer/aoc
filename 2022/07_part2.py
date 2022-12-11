@@ -63,8 +63,9 @@ def smallest_directory_size(dir: Directory, space: int) -> int:
 if __name__ == "__main__":
     with open("input7.txt", "r") as file:
         puzzle_input = file.read()
-    
+
     root_dir = create_directory_tree(puzzle_input)
     root_dir_size = compute_dir_size(root_dir)
     space = 30000000 - (70000000 - root_dir_size)
+
     print(smallest_directory_size(root_dir, space))

@@ -71,5 +71,4 @@ def count_visited_positions(input_str: str, rope_length) -> int:
 if __name__ == "__main__":
     with open("input9.txt", "r") as file:
         puzzle_input = file.read()
-    
     print(count_visited_positions(puzzle_input, rope_length=10))

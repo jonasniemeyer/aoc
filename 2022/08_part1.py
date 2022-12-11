@@ -23,5 +23,4 @@ def count_visible_trees(input_str: str) -> int:
 if __name__ == "__main__":
     with open("input8.txt", "r") as file:
         puzzle_input = file.read()
-    
     print(count_visible_trees(puzzle_input))

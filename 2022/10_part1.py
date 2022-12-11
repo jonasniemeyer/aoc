@@ -22,5 +22,4 @@ def sum_signal_strengths(input_str: str) -> int:
 if __name__ == "__main__":
     with open("input10.txt", "r") as file:
         puzzle_input = file.read()
-    
     print(sum_signal_strengths(puzzle_input))
