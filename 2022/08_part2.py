@@ -37,6 +37,6 @@ def highest_scenic_score(input_str: str) -> int:
     return max_score
 
 if __name__ == "__main__":
-    with open("input8.txt", "r") as file:
+    with open("input08.txt", "r") as file:
         puzzle_input = file.read()
     print(highest_scenic_score(puzzle_input))

@@ -4,6 +4,6 @@ def find_most_calories(input_str: str) -> int:
     )
 
 if __name__ == "__main__":
-    with open("input1.txt", "r") as file:
+    with open("input01.txt", "r") as file:
         puzzle_input = file.read()
     print(find_most_calories(puzzle_input))

@@ -22,6 +22,6 @@ def top_crates(input_str: str) -> str:
     return "".join(stack[0] for stack in stacks if len(stack) > 0)
 
 if __name__ == "__main__":
-    with open("input5.txt", "r") as file:
+    with open("input05.txt", "r") as file:
         puzzle_input = file.read()
     print(top_crates(puzzle_input))

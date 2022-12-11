@@ -12,6 +12,6 @@ def sum_of_priorities(input_str: str) -> int:
     return sum_
 
 if __name__ == "__main__":
-    with open("input3.txt", "r") as file:
+    with open("input03.txt", "r") as file:
         puzzle_input = file.read()
     print(sum_of_priorities(puzzle_input))

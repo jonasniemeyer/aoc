@@ -20,6 +20,6 @@ loses = {"A": "B", "B": "C", "C": "A"}
 scores = {"A": 1, "B": 2, "C": 3}
 
 if __name__ == "__main__":
-    with open("input2.txt", "r") as file:
+    with open("input02.txt", "r") as file:
         puzzle_input = file.read()
     print(total_score(puzzle_input))

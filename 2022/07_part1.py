@@ -56,7 +56,7 @@ def compute_total_size(dir: Directory, threshold: int) -> None:
     return None
 
 if __name__ == "__main__":
-    with open("input7.txt", "r") as file:
+    with open("input07.txt", "r") as file:
         puzzle_input = file.read()
     
     root_dir = build_directory_tree(puzzle_input)

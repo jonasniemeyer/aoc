@@ -10,6 +10,6 @@ def count_nested_pairs(input_str: str) -> list:
     return total
 
 if __name__ == "__main__":
-    with open("input4.txt", "r") as file:
+    with open("input04.txt", "r") as file:
         puzzle_input = file.read()
     print(count_nested_pairs(puzzle_input))

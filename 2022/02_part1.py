@@ -17,6 +17,6 @@ equal = {"X": "A", "Y": "B" ,"Z": "C"}
 scores = {"X": 1, "Y": 2, "Z": 3}
 
 if __name__ == "__main__":
-    with open("input2.txt", "r") as file:
+    with open("input02.txt", "r") as file:
         puzzle_input = file.read()
     print(total_score(puzzle_input))
