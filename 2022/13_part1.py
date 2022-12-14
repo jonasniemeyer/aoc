@@ -33,7 +33,6 @@ def sum_of_indices(input_str: str) -> int:
             total += index
     return total
 
-
 if __name__ == "__main__":
     with open("input13.txt", "r") as file:
         puzzle_input = file.read()
