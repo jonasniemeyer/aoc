@@ -11,32 +11,29 @@ uint64_t part2(FILE *file);
 int main(int argc, char *argv[])
 {
     FILE *file = fopen(argv[1], "r");
-    printf("%llu\n", part1(file));
+    printf("Part 1: %llu\n", part1(file));
     rewind(file);
-    printf("%llu\n", part2(file));
+    printf("Part 2: %llu\n", part2(file));
 }
 
 uint64_t part1(FILE *file)
 {
     char line[MAX_LINE];
     uint64_t sum = 0;
-    uint8_t first;
-    uint8_t last = 0;
+    uint8_t first, number;
 
     while (fgets(line, MAX_LINE, file)) {
         first = 1;
         for (size_t index = 0; index < strlen(line); index++) {
             if (isdigit(line[index])) {
+                number = (line[index] - '0');
                 if (first) {
-                    sum += (line[index]-'0') * 10;
-                    last = (line[index]-'0');
+                    sum += number * 10;
                     first = 0;
-                } else {
-                    last = (line[index]-'0');
                 }
             }
         }
-        sum += last;
+        sum += number;
     }
     
     return sum;
@@ -46,8 +43,7 @@ uint64_t part2(FILE *file)
 {
     char line[MAX_LINE];
     uint64_t sum = 0;
-    uint8_t first;
-    uint8_t last = 0;
+    uint8_t first, number;
 
     char *numbers[] = {
         "placeholder",
@@ -66,28 +62,24 @@ uint64_t part2(FILE *file)
         first = 1;
         for (size_t index = 0; index < strlen(line); index++) {
             if (isdigit(line[index])) {
+                number = line[index] - '0';
                 if (first) {
-                    sum += (line[index]-'0') * 10;
-                    last = (line[index]-'0');
+                    sum += number * 10;
                     first = 0;
-                } else {
-                    last = (line[index]-'0');
                 }
             } else {
                 for (size_t i = 1; i < 10; i++) {
                     if (strncmp(&line[index], numbers[i], strlen(numbers[i])) == 0) {
+                        number = i;
                         if (first) {
-                            sum += i * 10;
-                            last = i;
+                            sum += number * 10;
                             first = 0;
-                        } else {
-                            last = i;
                         }
                     }
                 }
             }
         }
-        sum += last;
+        sum += number;
     }
     
     return sum;
