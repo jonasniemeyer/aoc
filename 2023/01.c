@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     printf("Part 1: %llu\n", part1(file));
     rewind(file);
     printf("Part 2: %llu\n", part2(file));
+    fclose(file);
 }
 
 uint64_t part1(FILE *file)
