@@ -21,7 +21,7 @@ uint64_t part1(FILE *file)
     char line[MAX_LINE];
 
     while (fgets(line, MAX_LINE, file)) {
-        sum += compute_card_value(line);
+        sum += ((uint64_t)1 << (compute_card_value(line)-1));
     }
 
     return sum;
@@ -33,7 +33,7 @@ uint64_t compute_card_value(char *line)
     #define IN  1
     #define OUT 0
 
-    uint64_t value = 1;
+    uint64_t total = 0;
     uint64_t number;
     uint64_t winners[100];
     size_t no_winners = 0;
@@ -85,13 +85,12 @@ uint64_t compute_card_value(char *line)
             number = atoi(number_str);
             for (size_t j = 0; j < no_winners; j++) {
                 if (number == winners[j]) {
-                    value <<= 1;
+                    total += 1;
                     break;
                 }
             }
         }
     }
-    value >>= 1;
 
-    return value;
+    return total;
 }
