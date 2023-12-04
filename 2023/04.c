@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 uint64_t part1(FILE *file);
-uint64_t compute_card_value(char *line);
+uint64_t winning_hands_count(char *line);
 
 #define MAX_LINE    1000
 
@@ -21,14 +21,14 @@ uint64_t part1(FILE *file)
     char line[MAX_LINE];
 
     while (fgets(line, MAX_LINE, file)) {
-        sum += ((uint64_t)1 << (compute_card_value(line)-1));
+        sum += ((uint64_t)1 << (winning_hands_count(line)-1));
     }
 
     return sum;
 }
 
 
-uint64_t compute_card_value(char *line)
+uint64_t winning_hands_count(char *line)
 {
     #define IN  1
     #define OUT 0
