@@ -71,13 +71,6 @@ uint64_t part2(FILE *file)
         strcpy(line_middle, line_below);
     }
 
-    /*
-    // set imaginary line below last line
-    for (size_t i = 0; i < MAX_LINE; i++) {
-        line_below[i] = '.';
-    }
-    sum += gear_sumproduct(line_middle, line_above, line_below);*/
-
     return sum;
 }
 
