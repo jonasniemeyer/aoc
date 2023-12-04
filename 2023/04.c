@@ -42,7 +42,7 @@ uint64_t part2(FILE *file)
     }
     rewind(file);
 
-    size_t card_count[total_lines];
+    size_t *card_count = malloc(sizeof(size_t) * total_lines);
     for (size_t i = 0; i < total_lines; i++) {
         card_count[i] = 1;
     }
@@ -59,6 +59,7 @@ uint64_t part2(FILE *file)
         current_line++;
     }
 
+    free(card_count);
     return sum;
 }
 
