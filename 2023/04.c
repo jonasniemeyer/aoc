@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 uint64_t part1(FILE *file);
+uint64_t part2(FILE *file);
 uint64_t winning_hands_count(char *line);
 
 #define MAX_LINE    1000
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
 {
     FILE *file = fopen(argv[1], "r");
     printf("Part 1: %llu\n", part1(file));
+    rewind(file);
+    printf("Part 2: %llu\n", part2(file));
 }
 
 uint64_t part1(FILE *file)
@@ -27,6 +30,37 @@ uint64_t part1(FILE *file)
     return sum;
 }
 
+uint64_t part2(FILE *file)
+{
+    uint64_t sum = 0;
+    char line[MAX_LINE];
+    size_t total_lines = 0;
+    size_t current_line = 0;
+
+    while (fgets(line, MAX_LINE, file)) {
+        total_lines++;
+    }
+    rewind(file);
+
+    size_t card_count[total_lines];
+    for (size_t i = 0; i < total_lines; i++) {
+        card_count[i] = 1;
+    }
+
+    while (fgets(line, MAX_LINE, file)) {
+        sum += card_count[current_line];
+
+        for (size_t offset = 1; offset < winning_hands_count(line)+1; offset++) {
+            if ((current_line+offset) <= total_lines) {
+                card_count[current_line+offset] += card_count[current_line];
+            }
+        }
+
+        current_line++;
+    }
+
+    return sum;
+}
 
 uint64_t winning_hands_count(char *line)
 {
