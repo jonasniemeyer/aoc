@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 uint64_t part1(FILE *file);
+uint64_t part2(FILE *file);
 uint64_t line_sum(char *line, char* line_above, char* line_below);
 
 #define MAX_LINE    1000
@@ -12,7 +13,9 @@ uint64_t line_sum(char *line, char* line_above, char* line_below);
 int main(int argc, char *argv[])
 {
     FILE *file = fopen(argv[1], "r");
-    printf("%llu", part1(file));
+    printf("Part 1: %llu\n", part1(file));
+    rewind(file);
+    printf("Part 2: %llu\n", part2(file));
 }
 
 uint64_t part1(FILE *file)
@@ -27,15 +30,11 @@ uint64_t part1(FILE *file)
         line_above[i] = '.';
     }
 
-    size_t line_counter = 0;
+    fgets(line_middle, MAX_LINE, file);
+
     while (fgets(line_below, MAX_LINE, file)) {
-        line_counter++;
-
-        if (line_counter >= 2) {
-            sum += line_sum(line_middle, line_above, line_below);
-            strcpy(line_above, line_middle);
-        }
-
+        sum += line_sum(line_middle, line_above, line_below);
+        strcpy(line_above, line_middle);
         strcpy(line_middle, line_below);
     }
 
@@ -44,6 +43,27 @@ uint64_t part1(FILE *file)
         line_below[i] = '.';
     }
     sum += line_sum(line_middle, line_above, line_below);
+
+    return sum;
+}
+
+uint64_t part2(FILE *file)
+{
+    char line_above[MAX_LINE];
+    char line_middle[MAX_LINE];
+    char line_below[MAX_LINE];
+    uint64_t sum = 0;
+
+    size_t line_counter = 0;
+    while (fgets(line_below, MAX_LINE, file)) {
+        line_counter++;
+
+        if (line_counter >= 2) {
+            strcpy(line_above, line_middle);
+        }
+
+        strcpy(line_middle, line_below);
+    }
 
     return sum;
 }
