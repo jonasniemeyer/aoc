@@ -5,8 +5,8 @@
 
 uint64_t part1(FILE *file);
 uint64_t part2(FILE *file);
-uint8_t limit_overflow(char *line);
-uint64_t largest_no_cubes(char *line, char* color);
+void parse_line(char *line, char **colors, uint64_t *values);
+uint64_t limit_overflow(uint64_t values[], uint64_t limits[]);
 
 #define MAX_LINE    1000
 
@@ -22,14 +22,18 @@ int main()
 uint64_t part1(FILE *file)
 {
     char line[MAX_LINE];
+    char *colors[] = {"red", "green", "blue"};
+    uint64_t limits[] = {12, 13, 14};
+
     uint64_t sum = 0;
-    uint8_t line_count = 0;
+    uint64_t line_count = 0;
 
     while (fgets(line, MAX_LINE, file)) {
+        uint64_t values[] = {0, 0, 0};
         line_count++;
-        if (!limit_overflow(line)) {
-            sum += line_count;
-        }
+        
+        parse_line(line, colors, values);
+        if (!limit_overflow(values, limits)) sum += line_count;
     }
 
     return sum;
@@ -38,63 +42,46 @@ uint64_t part1(FILE *file)
 uint64_t part2(FILE *file)
 {
     char line[MAX_LINE];
-    uint64_t sum = 0;
     char *colors[] = {"red", "green", "blue"};
 
+    uint64_t sum = 0;
+
     while (fgets(line, MAX_LINE, file)) {
-        uint64_t number = 1;
+        uint64_t values[] = {0, 0, 0};
+        uint64_t line_prod = 1;
+
+        parse_line(line, colors, values);
         for (size_t i = 0; i < 3; i++) {
-            number *= largest_no_cubes(line, colors[i]);
+            line_prod *= values[i];
         }
-        sum += number;
+        sum += line_prod;
     }
 
     return sum;
 }
 
-uint8_t limit_overflow(char *line)
+void parse_line(char *line, char **colors, uint64_t *values)
 {
-    char *colors[] = {"red", "green", "blue"};
-    uint8_t limits[] = {12, 13, 14};
-
     for (size_t index = 0; index < strlen(line); index++) {
         for (size_t i = 0; i < 3; i++) {
             if (strncmp(&line[index], colors[i], strlen(colors[i])) == 0) {
-                int8_t offset = -2;
-                uint8_t number = 0;
-                uint8_t max = limits[i];
-                uint8_t base = 1;
+                int64_t offset = -2;
+                uint64_t number = 0;
+                uint64_t base = 1;
                 while (isdigit(line[index+offset])) {
                     number += (line[index+offset]-'0') * base;
                     offset -= 1;
                     base *= 10;
                 }
-                if (number > limits[i]) {
-                    return 1;
-                }
+                if (number > values[i]) values[i] = number;
             }
         }
     }
-    return 0;
 }
 
-uint64_t largest_no_cubes(char *line, char* color)
-{
-    uint64_t max = 0;
-    for (size_t index = 0; index < strlen(line); index++) {
-        if (strncmp(&line[index], color, strlen(color)) == 0) {
-            int8_t offset = -2;
-            uint8_t number = 0;
-            uint8_t base = 1;
-            while (isdigit(line[index+offset])) {
-                number += (line[index+offset]-'0') * base;
-                offset -= 1;
-                base *= 10;
-            }
-            if (number > max) {
-                max = number;
-            }
-        }
+uint64_t limit_overflow(uint64_t values[], uint64_t limits[]) {
+    for (size_t i = 0; i < 3; i++) {
+        if (values[i] > limits[i]) return 1;
     }
-    return max;
+    return 0;
 }
