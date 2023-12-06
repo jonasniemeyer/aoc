@@ -99,7 +99,7 @@ uint64_t compute_possible_charges(uint64_t time, uint64_t record)
     uint64_t distance;
 
     for (size_t charge = 1; charge < time; charge++) {
-        if (((charge) * (time-charge)) > record) total++;
+        if ((charge * (time-charge)) > record) total++;
     }
 
     return total;
