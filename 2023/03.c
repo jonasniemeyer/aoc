@@ -8,7 +8,7 @@ uint64_t part1(FILE *file);
 uint64_t part2(FILE *file);
 uint64_t line_sum(char *line, char* line_above, char* line_below);
 uint64_t gear_sumproduct(char *line, char* line_above, char* line_below);
-uint64_t extract_number(char *line, size_t index);
+uint64_t string_to_number(char *line, size_t index);
 
 #define MAX_LINE    1000
 
@@ -18,6 +18,7 @@ int main()
     printf("Part 1: %llu\n", part1(file));
     rewind(file);
     printf("Part 2: %llu\n", part2(file));
+    fclose(file);
 }
 
 uint64_t part1(FILE *file)
@@ -159,45 +160,45 @@ uint64_t gear_sumproduct(char *line, char* line_above, char* line_below)
 
         // check left
         if (isdigit(line[left_index])) {
-            number *= extract_number(line, left_index);
+            number *= string_to_number(line, left_index);
             total += 1;
         }
         
         // check right
         if (isdigit(line[i+1])) {
-            number *= extract_number(line, i+1);
+            number *= string_to_number(line, i+1);
             total += 1;
         }
 
         // check above
         if (isdigit(line_above[left_index])) {
-            number *= extract_number(line_above, left_index);
+            number *= string_to_number(line_above, left_index);
             total += 1;
             if (!isdigit(line_above[i]) && isdigit(line_above[i+1])) {
-                number *= extract_number(line_above, i+1);
+                number *= string_to_number(line_above, i+1);
                 total += 1;
             }
         } else if (isdigit(line_above[i])) {
-            number *= extract_number(line_above, i);
+            number *= string_to_number(line_above, i);
             total += 1;
         } else if (isdigit(line_above[i+1])) {
-            number *= extract_number(line_above, i+1);
+            number *= string_to_number(line_above, i+1);
             total += 1;
         }
 
         // check below
         if (isdigit(line_below[left_index])) {
-            number *= extract_number(line_below, left_index);
+            number *= string_to_number(line_below, left_index);
             total += 1;
             if (!isdigit(line_below[i]) && isdigit(line_below[i+1])) {
-                number *= extract_number(line_below, i+1);
+                number *= string_to_number(line_below, i+1);
                 total += 1;
             }
         } else if (isdigit(line_below[i])) {
-            number *= extract_number(line_below, i);
+            number *= string_to_number(line_below, i);
             total += 1;
         } else if (isdigit(line_below[i+1])) {
-            number *= extract_number(line_below, i+1);
+            number *= string_to_number(line_below, i+1);
             total += 1;
         }
 
@@ -209,7 +210,7 @@ uint64_t gear_sumproduct(char *line, char* line_above, char* line_below)
     return sum;
 }
 
-uint64_t extract_number(char *line, size_t index)
+uint64_t string_to_number(char *line, size_t index)
 {
     char number[10];
     char *ptr = &number[0];
