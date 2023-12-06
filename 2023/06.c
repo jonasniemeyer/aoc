@@ -5,7 +5,9 @@
 #include <ctype.h>
 
 uint64_t part1(FILE *file);
+uint64_t part2(FILE *file);
 uint64_t parse_line(FILE *file, uint64_t array[]);
+uint64_t parse_line_part2(FILE *file);
 uint64_t compute_possible_charges(uint64_t time, uint64_t record);
 
 #define MAX_LINE    1000
@@ -15,6 +17,8 @@ int main()
 {
     FILE *file = fopen("input06.txt", "r");
     printf("Part 1: %llu\n", part1(file));
+    rewind(file);
+    printf("Part 2: %llu\n", part2(file));
 }
 
 uint64_t part1(FILE *file)
@@ -25,13 +29,21 @@ uint64_t part1(FILE *file)
 
     uint64_t total_races = parse_line(file, time);
     parse_line(file, record);
-    printf("%llu %llu\n", time[2], record[3]);
 
     for (size_t i = 0; i < total_races; i++) {
         margin_error *= compute_possible_charges(time[i], record[i]);
     }
 
     return margin_error;
+}
+
+uint64_t part2(FILE *file)
+{
+
+    uint64_t time = parse_line_part2(file);
+    uint64_t record = parse_line_part2(file);
+
+    return compute_possible_charges(time, record);
 }
 
 uint64_t parse_line(FILE *file, uint64_t array[])
@@ -62,6 +74,23 @@ uint64_t parse_line(FILE *file, uint64_t array[])
     }
 
     return index;
+}
+
+uint64_t parse_line_part2(FILE *file)
+{
+    char line[MAX_LINE];
+    uint64_t number = 0;
+
+    fgets(line, MAX_LINE, file);
+
+    for (size_t i = 0; i < strlen(line); i++) {
+        if (isdigit(line[i])) {
+            number *= 10;
+            number += (line[i] - '0');
+        }
+    }
+
+    return number;
 }
 
 uint64_t compute_possible_charges(uint64_t time, uint64_t record)
