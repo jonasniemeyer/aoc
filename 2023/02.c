@@ -10,9 +10,9 @@ uint64_t largest_no_cubes(char *line, char* color);
 
 #define MAX_LINE    1000
 
-int main(int argc, char *argv[])
+int main()
 {
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = fopen("input02.txt", "r");
     printf("Part 1: %llu\n", part1(file));
     rewind(file);
     printf("Part 2: %llu\n", part2(file));
