@@ -143,65 +143,66 @@ uint64_t gear_sumproduct(char *line, char* line_above, char* line_below)
     uint64_t sum = 0;
 
     for (size_t i = 0; i < strlen(line); i++) {
-        if (line[i] == '*') {
-            uint64_t number = 1;
-            size_t total = 0;
-            size_t left_index;
+        if (line[i] != '*') {
+            continue;
+        }
+        uint64_t number = 1;
+        size_t total = 0;
+        size_t left_index;
 
-            // take care of leftmost asterisks
-            if (i == 0) {
-                left_index = 0;
-            } else {
-                left_index = i-1;
-            }
+        // take care of leftmost asterisks
+        if (i == 0) {
+            left_index = 0;
+        } else {
+            left_index = i-1;
+        }
 
-            // check left
-            if (isdigit(line[left_index])) {
-                number *= extract_number(line, left_index);
-                total += 1;
-            }
-            
-            // check right
-            if (isdigit(line[i+1])) {
-                number *= extract_number(line, i+1);
-                total += 1;
-            }
+        // check left
+        if (isdigit(line[left_index])) {
+            number *= extract_number(line, left_index);
+            total += 1;
+        }
+        
+        // check right
+        if (isdigit(line[i+1])) {
+            number *= extract_number(line, i+1);
+            total += 1;
+        }
 
-            // check above
-            if (isdigit(line_above[left_index])) {
-                number *= extract_number(line_above, left_index);
-                total += 1;
-                if (!isdigit(line_above[i]) && isdigit(line_above[i+1])) {
-                    number *= extract_number(line_above, i+1);
-                    total += 1;
-                }
-            } else if (isdigit(line_above[i])) {
-                number *= extract_number(line_above, i);
-                total += 1;
-            } else if (isdigit(line_above[i+1])) {
+        // check above
+        if (isdigit(line_above[left_index])) {
+            number *= extract_number(line_above, left_index);
+            total += 1;
+            if (!isdigit(line_above[i]) && isdigit(line_above[i+1])) {
                 number *= extract_number(line_above, i+1);
                 total += 1;
             }
+        } else if (isdigit(line_above[i])) {
+            number *= extract_number(line_above, i);
+            total += 1;
+        } else if (isdigit(line_above[i+1])) {
+            number *= extract_number(line_above, i+1);
+            total += 1;
+        }
 
-            // check below
-            if (isdigit(line_below[left_index])) {
-                number *= extract_number(line_below, left_index);
-                total += 1;
-                if (!isdigit(line_below[i]) && isdigit(line_below[i+1])) {
-                    number *= extract_number(line_below, i+1);
-                    total += 1;
-                }
-            } else if (isdigit(line_below[i])) {
-                number *= extract_number(line_below, i);
-                total += 1;
-            } else if (isdigit(line_below[i+1])) {
+        // check below
+        if (isdigit(line_below[left_index])) {
+            number *= extract_number(line_below, left_index);
+            total += 1;
+            if (!isdigit(line_below[i]) && isdigit(line_below[i+1])) {
                 number *= extract_number(line_below, i+1);
                 total += 1;
             }
+        } else if (isdigit(line_below[i])) {
+            number *= extract_number(line_below, i);
+            total += 1;
+        } else if (isdigit(line_below[i+1])) {
+            number *= extract_number(line_below, i+1);
+            total += 1;
+        }
 
-            if (total == 2) {
-                sum += number;
-            }
+        if (total == 2) {
+            sum += number;
         }
     }
 
