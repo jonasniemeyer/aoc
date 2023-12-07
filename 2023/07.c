@@ -4,8 +4,8 @@
 #include <string.h>
 #include <ctype.h>
 
-uint64_t part1(FILE *file);
-uint64_t parse_lines(FILE *file, uint64_t hands[], uint64_t bids[]);
+uint64_t compute_winnings(FILE *file, uint64_t (*hand_parser)(char *line));
+uint64_t parse_lines(FILE *file, uint64_t hands[], uint64_t bids[], uint64_t (*hand_parser)(char *line));
 uint64_t parse_hand(char *line);
 uint64_t parse_bid(char *line);
 void dual_sort(uint64_t *hands, uint64_t *bids, uint64_t total_elements);
@@ -16,17 +16,17 @@ void dual_sort(uint64_t *hands, uint64_t *bids, uint64_t total_elements);
 int main()
 {
     FILE *file = fopen("input07.txt", "r");
-    printf("Part 1: %llu\n", part1(file));
+    printf("Part 1: %llu\n", compute_winnings(file, parse_hand));
     rewind(file);
 }
 
-uint64_t part1(FILE *file)
+uint64_t compute_winnings(FILE *file, uint64_t (*hand_parser)(char *line))
 {
     uint64_t total_winnings = 0;
     uint64_t hands[MAX_ELEMENTS];
     uint64_t bids[MAX_ELEMENTS];
 
-    uint64_t total_elements = parse_lines(file, hands, bids);
+    uint64_t total_elements = parse_lines(file, hands, bids, hand_parser);
     dual_sort(hands, bids, total_elements);
 
     for (size_t i = 0; i < total_elements; i++) {
@@ -36,13 +36,13 @@ uint64_t part1(FILE *file)
     return total_winnings;
 }
 
-uint64_t parse_lines(FILE *file, uint64_t hands[], uint64_t bids[])
+uint64_t parse_lines(FILE *file, uint64_t hands[], uint64_t bids[], uint64_t (*hand_parser)(char *line))
 {
     char line[MAX_LINE];
     uint64_t index = 0;
 
     while (fgets(line, MAX_LINE, file)) {
-        hands[index] = parse_hand(line);
+        hands[index] = hand_parser(line);
         bids[index] = parse_bid(line);
         index++;
     }
