@@ -12,7 +12,7 @@ uint64_t parse_bid(char *line);
 void dual_sort(uint64_t *hands, uint64_t *bids, uint64_t total_elements);
 
 #define MAX_LINE        1000
-#define MAX_ELEMENTS    100000
+#define MAX_ELEMENTS    1000
 
 int main()
 {
